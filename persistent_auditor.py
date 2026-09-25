@@ -20,6 +20,24 @@ def load_inventory():
         print("Inventory file is unreadable. Starting with an empty inventory.\n")
         return 0, []
 
+def save_inventory(total, history):
+    """Write the total and history back to file."""
+    with open(INVENTORY_FILE, "w") as f:
+        f.write(f"{total}\n")
+        f.write(",".join(str(x) for x in history) + "\n")
+        print(f"Inventory saved to {INVENTORY_FILE}")
+
+    
+def get_valid_input():
+    user_input = input("Enter stock quantity: ").strip()
+    if user_input.lower() == "quit":
+        return "quit"
+
+    if not user_input.isdigit():
+        print(f"Error: '{user_input}' is not a valid number. Please enter a whole number.\n")
+        return None
+
+    return int(user_input)
 
 def process_delivery(current_total, new_value):
     return current_total + new_value
